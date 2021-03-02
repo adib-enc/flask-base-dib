@@ -5,6 +5,7 @@ webassets-external/
 *.pyo
 env
 venv
+fbd
 *.env
 env*
 dist
@@ -14,3 +15,4 @@ dist
 .idea
 dump.rdb
 .vscode/
+config.env
