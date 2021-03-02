@@ -38,16 +38,19 @@ def create():
     """Create a new data."""
     form = DatatestForm()
     if form.validate_on_submit():
+        from datetime import datetime
+        dtime = datetime.today()
         datatest = Datatest(
             name=form.name.data,
             d1=form.name.data,
             d2=form.d2.data,
-            d3=form.d3.data,
+            d3=dtime,
             d4=form.d4.data,
             )
         db.session.add(datatest)
         db.session.commit()
         flash('Datatest {} successfully created'.format(datatest.name), 'form-success')
+        return redirect(url_for('datatest.index'))
     return render_template('master/datatest/add-edit.html', form=form)
 
 
@@ -79,20 +82,26 @@ def edit(id):
             dbdata.name = form.name.data
             dbdata.d1 = form.d1.data
             dbdata.d2 = form.d2.data
-            dbdata.d3 = form.d3.data
+            
+            from datetime import datetime
+            dtime = datetime.today()
+
+            # dbdata.d3 = form.d3.data
+            dbdata.d3 = dtime
             dbdata.d4 = form.d4.data
             
             db.session.add(dbdata)
             db.session.commit()
             flash('Data successfully changed to {}.'.format(datatest.name, 'form-success'))
-    
-    return render_template('master/datatest/add-edit.html', 
+            return redirect(url_for('datatest.edit', id=id))
+    else:
+        return render_template('master/datatest/add-edit.html', 
             datatest=datatest, 
             form=form)
     
 
 
-@datatest.route('/datatest/<int:id>/_delete')
+@datatest.route('/_delete/<int:id>/')
 @login_required
 @admin_required
 def delete(id):
@@ -100,6 +109,6 @@ def delete(id):
     datatest = Datatest.query.filter_by(id=id).first()
     db.session.delete(datatest)
     db.session.commit()
-    flash('Successfully deleted data %s.' % Datatest.name(), 'success')
+    flash('Successfully deleted data %s.' % Datatest.name, 'success')
 
-    return redirect(url_for('admin.registered_datatests'))
+    return redirect(url_for('datatest.index'))

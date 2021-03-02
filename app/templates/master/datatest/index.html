@@ -9,6 +9,10 @@
                 <i class="caret left icon"></i>
                 Back to dashboard
             </a>
+            <a class="ui basic compact button" href="{{ url_for('datatest.create') }}">
+                <i class="caret plus icon"></i>
+                +Add
+            </a>
 
             <div class="ui menu">
                 <div id="select-role" class="ui dropdown item">
@@ -57,6 +61,7 @@
                             <td>{{ d.d4 }}</td>
                             <td>
                                 <a href="{{ url_for('datatest.edit', id=d.id) }}">Edit</a>
+                                <a href="{{ url_for('datatest.delete', id=d.id) }}">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}
