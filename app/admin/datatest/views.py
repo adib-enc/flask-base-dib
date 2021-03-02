@@ -59,7 +59,7 @@ def create():
 @admin_required
 def all():
     """View all registered datatests."""
-    datatest = Datatest.query.all()
+    datatests = Datatest.query.all()
     return render_template(
         'master/datatest/index.html', datatests=datatests, roles=roles)
 
