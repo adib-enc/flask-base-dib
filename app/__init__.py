@@ -76,5 +76,8 @@ def create_app(config):
 
     from .admin import admin as admin_blueprint
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
+    
+    from .admin.datatest import datatest as datatest_blueprint
+    app.register_blueprint(datatest_blueprint, url_prefix='/admin/datatest')
 
     return app
